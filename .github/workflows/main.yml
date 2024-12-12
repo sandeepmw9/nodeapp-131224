@@ -39,5 +39,4 @@ jobs:
     uses: ./.github/workflows/called.yml #calling the workflow and passing input with artifact name.
     with:
       artifact: dist-files
-    if: failure()
 
