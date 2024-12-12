@@ -17,8 +17,8 @@ jobs:
           name: ${{ inputs.artifact }} 
       - name: list downloaded artifacts
         run: ls
-      - name: deploy & upload artifact
-        run: echo "deploying and uploading...!"
+      - name: deploy
+        run: echo "deploying...!!"
 
 
 #if reusable workflows are functions then inputs are args passed and outputs are return values
