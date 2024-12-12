@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: download artifact
-        uses: actions/download-artifact@v3 # downloading the artifact from caller workflow to this runner to perform upload of artifact files
+        uses: actions/download-artifact@v4 # downloading the artifact from caller workflow to this runner to perform upload of artifact files
         with:
           name: ${{ inputs.artifact }} 
       - name: list downloaded artifacts
