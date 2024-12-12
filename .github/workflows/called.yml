@@ -2,7 +2,7 @@ name: called_workflow
 on: 
   workflow_call:
     inputs: #inputs passed by caller workflow.
-      artifact-name: 
+      artifact: 
         description: name of artifact 
         required: false # when set to true, fail workflow if input not passed, when set false, execute workflow anyway
         default: dist # default file to look for if input not passed
@@ -17,10 +17,10 @@ jobs:
     #   outcomes: ${{ steps.set-result.outputs.step-result }} #getting the output on job level
     runs-on: ubuntu-latest
     steps:
-      - name: get code
+      - name: download artifact
         uses: actions/download-artifact@v3 # downloading the artifact from caller workflow to this runner to perform upload of artifact files
         with:
-          artifact-name: ${{ inputs.artifact-name }} 
+          name: ${{ inputs.artifact }} 
       - name: list files
         run: ls
       - name: deploy & upload artifact
