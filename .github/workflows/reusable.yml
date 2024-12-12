@@ -1,0 +1,30 @@
+name: called_workflow
+on: 
+  workflow_call:
+    inputs: #inputs passed by caller workflow.
+      artifact-name: 
+        description: name of artifact 
+        required: false # when set to true, fail workflow if input not passed, when set false, execute workflow anyway
+        default: dist # default file to look for if input not passed
+        type: string  
+    outputs:
+      result:
+        description: the result of deployment of the this redundent job.
+        value: ${{ jobs.deploy.outputs.outcomes}}
+jobs:
+  deploy:
+    outputs:
+      outcomes: ${{ steps.set-result.outputs.step-result}} #getting the output on job level
+    runs-on: ubuntu-lates
+    steps:
+      - name: get code
+        uses: actions/download-artifact@v3 # downloading the artifact from caller workflow to this runner to perform upload of artifact files
+        with:
+          artifact-name: ${{ inputs.artifact-name }} 
+      - name: list files
+        run: ls
+      - name: deploy & upload artifact
+        run: echo "deploying and uploading...!"
+      - name: set result ouput #getting output of the job on step level
+        id: set-result
+        run: echo "step-result=success" >> $GITHUB_OUTPUT # saving the output in github outputs variable
