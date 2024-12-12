@@ -7,14 +7,14 @@ on:
         required: false # when set to true, fail workflow if input not passed, when set false, execute workflow anyway
         default: dist # default file to look for if input not passed
         type: string  
-    outputs:
-      result:
-        description: the result of deployment of the this redundent job.
-        value: ${{ jobs.deploy.outputs.outcomes}}
+    # outputs:
+    #   result:
+    #     description: the result of deployment of the this redundent job.
+    #     value: ${{ jobs.deploy.outputs.outcomes }}
 jobs:
   deploy:
-    outputs:
-      outcomes: ${{ steps.set-result.outputs.step-result}} #getting the output on job level
+    # outputs:
+    #   outcomes: ${{ steps.set-result.outputs.step-result }} #getting the output on job level
     runs-on: ubuntu-latest
     steps:
       - name: get code
@@ -25,6 +25,3 @@ jobs:
         run: ls
       - name: deploy & upload artifact
         run: echo "deploying and uploading...!"
-      - name: set result ouput #getting output of the job on step level
-        id: set-result
-        run: echo "step-result=success" >> $GITHUB_OUTPUT # saving the output in github outputs variable

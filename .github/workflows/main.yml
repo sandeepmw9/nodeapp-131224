@@ -2,7 +2,7 @@ name: sample-node-app
 on: 
   workflow_dispatch:
 jobs:
-  build:
+  setup-node:
     strategy:
       matrix:
           node_version: [12, 14, 16] #parallel execution on multiple node versions with different OS
@@ -18,7 +18,7 @@ jobs:
       - name: install dependencies
         run: npm ci
   test:
-    needs: build
+    needs: setup-node
     runs-on: ubuntu-latest
     steps:
       - name: get code
@@ -32,16 +32,11 @@ jobs:
       - name: upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: mynode-app
+          name: dist-files
           path: dist
   deploy:
     needs: test
     uses: ./.github/workflows/called.yml
     with:
       artifact-name: mynode-app
-  # print-deploy-job: 
-  #   needs: deploy
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: print outout from reusable workflow
-  #       run: echo "${{ needs.deploy.outputs.result }}" #this is how we are accessing the output from reusable workflow, which we stored with name result.
+
