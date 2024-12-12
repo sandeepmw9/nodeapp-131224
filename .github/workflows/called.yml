@@ -15,7 +15,7 @@ jobs:
   deploy:
     outputs:
       outcomes: ${{ steps.set-result.outputs.step-result}} #getting the output on job level
-    runs-on: ubuntu-lates
+    runs-on: ubuntu-latest
     steps:
       - name: get code
         uses: actions/download-artifact@v3 # downloading the artifact from caller workflow to this runner to perform upload of artifact files
